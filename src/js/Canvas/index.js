@@ -109,8 +109,8 @@ class Canvas {
 const canvas = new Canvas({
     element : document.getElementById('solar'),
     dimensions : {
-        width : 500,
-        height : 500
+        width : 800,
+        height : 800
     }
 })
 

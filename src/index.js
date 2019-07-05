@@ -5,11 +5,12 @@ import {
     pointOnEllipse
 } from './js/utils/math';
 import Sun from "./js/Sun";
+import Stars from "./js/Stars";
 
 new Earth({
     ellipse : {
-        xRadius : 0.4,
-        yRadius : 0.2
+        xRadius : 0.45,
+        yRadius : 0.3
     },
     angle : 0,
 })
@@ -18,3 +19,6 @@ new Earth({
 new Sun({
 
 })
+
+
+new Stars(1000);
