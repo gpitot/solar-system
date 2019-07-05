@@ -9,17 +9,17 @@ class Stars {
         
         }
 
-        this.starRotationSpeed = 120;
+        this.starFlickerSpeed = 120;
 
 
         this.createStars(numStars);
         
         canvas.addToDrawQueue(this.draw, 0);
-        this.rotateStars();
+        this.updateStars();
     }
 
 
-    rotateStars = () => {
+    updateStars = () => {
         for (let i=0; i<this.stars.length; i+=1) {
             this.stars[i].rotation += 1;
             if (this.stars[i].rotation > 360) {
@@ -27,7 +27,7 @@ class Stars {
             }
         }
 
-        setTimeout(this.rotateStars, this.starRotationSpeed);
+        setTimeout(this.updateStars, this.starFlickerSpeed);
     }
 
     createStars = (numStars) => {
