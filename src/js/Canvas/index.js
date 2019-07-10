@@ -66,7 +66,7 @@ class Canvas {
         for (let i=this.queue.length - 1; i >= 0; i-=1) {
             if (zIndex >= this.queue[i].zIndex) {
                 //inserts new drawing into correct order
-                this.queue.splice(i, 0, {
+                this.queue.splice(i+1, 0, {
                     queueID : this.currentDrawQueueID,
                     drawFN,
                     zIndex

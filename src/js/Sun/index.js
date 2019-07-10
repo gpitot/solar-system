@@ -27,7 +27,11 @@ class Sun {
         this.position = POSITION;
         this.radius = RADIUS;
 
+        this.speed = 25;
+
         this.getMap();
+        this.updateMap();
+        console.log('map  = ', this.map);
         canvas.addToDrawQueue(this.draw, 2);
     }
 
@@ -35,13 +39,38 @@ class Sun {
     getMap = () => {
         const rndColor = () => {
             const rnd = (min, max) => Math.max(min, Math.floor(Math.random() * max));
-            return [rnd(0, 50), rnd(75, 100), 50, 1];
+            return {
+                color : [rnd(0, 50), rnd(75, 100), 50, 1],
+                direction : -1,
+            }
         }
         const numPixelsInRow = ratioToReal(RADIUS, canvas.canvas.width) / PIXELSIZE;
         console.log(numPixelsInRow);
         this.map = generateMap(numPixelsInRow, rndColor, 1);
         console.log(this.map);
         
+    }
+
+    updateMap = () => {
+        const {blocks} = this.map;
+
+        for (let y=0; y<blocks.length; y+=1) {
+            for (let x=0; x<blocks[y].length; x+=1) {
+                const {color, direction} = blocks[y][x];
+                
+                color[0] += direction;
+                if (color[0] <= 1 || color[0] >= 50) {
+                    blocks[y][x].direction *= -1;
+                }
+
+                color[1] += direction;
+                if (color[1] <= 1 || color[1] >= 100) {
+                    blocks[y][x].direction *= -1;
+                }
+            }
+        }
+
+        setTimeout(this.updateMap, this.speed);
     }
 
 
@@ -65,13 +94,13 @@ class Sun {
 
         for (let y=0; y<blocks.length; y+=1) {
             for (let x=0; x<blocks[y].length; x+=1) {
-                const color = blocks[y][x];
+                const {color} = blocks[y][x];
                 ctx.fillStyle = `hsla(${color[0]}, ${color[1]}%, ${color[2]}%, ${color[3]})`;
                 
-                color[0] += 1;
-                if (color[0] > 50) {
-                    color[0] = 0;
-                }
+                // color[0] += 1;
+                // if (color[0] > 50) {
+                //     color[0] = 0;
+                // }
                 ctx.fillRect(position.x + (x * PIXELSIZE), position.y + (PIXELSIZE * y), PIXELSIZE, PIXELSIZE);
             }
         }
