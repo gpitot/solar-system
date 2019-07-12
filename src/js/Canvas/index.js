@@ -35,14 +35,8 @@ class Canvas {
 
 
     editDrawQueue = (drawQueueID, drawFN, zIndex) => {
-        for (let i=this.queue.length - 1; i >= 0; i-=1) {
-            if (this.queue[i].queueID === drawQueueID) {
-                this.queue[i]= {
-                    ...this.queue[i],
-                    drawFN,
-                    zIndex
-                }
-            }
+        if (this.removeFromDrawQueue(drawQueueID)) {
+            this.addToDrawQueue(drawFN, zIndex, drawQueueID, );
         }
     }
 
@@ -50,16 +44,21 @@ class Canvas {
         for (let i=this.queue.length - 1; i >= 0; i-=1) {
             if (this.queue[i].queueID === drawQueueID) {
                 this.queue.splice(i, 1);
-                break;
+                return true;
             }
         }
+        return false;
     }
 
 
-    addToDrawQueue = (drawFN, zIndex) => {
+    addToDrawQueue = ( drawFN, zIndex, drawQueueID = null,) => {
         //queue is ordered highest to lowest
         //because when drawing i will loop backwards and remove elements as we go
-        this.currentDrawQueueID += 1;
+        if (drawQueueID === null) {
+            this.currentDrawQueueID += 1;
+            drawQueueID = this.currentDrawQueueID;
+        }
+        
         
         let added = false;
 
@@ -67,7 +66,7 @@ class Canvas {
             if (zIndex >= this.queue[i].zIndex) {
                 //inserts new drawing into correct order
                 this.queue.splice(i+1, 0, {
-                    queueID : this.currentDrawQueueID,
+                    queueID : drawQueueID,
                     drawFN,
                     zIndex
                 });
@@ -79,13 +78,13 @@ class Canvas {
         if (added === false) {
             console.log(added);
             this.queue.unshift({
-                queueID : this.currentDrawQueueID,
+                queueID : drawQueueID,
                 drawFN,
                 zIndex
             })
         }
         console.log(this.queue);
-        return this.currentDrawQueueID;
+        return drawQueueID;
     }
 
 
