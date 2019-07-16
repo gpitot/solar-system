@@ -29,7 +29,6 @@ class Sun {
 
         this.getMap();
         this.updateMap();
-        console.log('map  = ', this.map);
         canvas.addToDrawQueue(this.draw, 2);
     }
 

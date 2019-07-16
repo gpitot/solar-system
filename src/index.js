@@ -7,7 +7,7 @@ import {
 import Sun from "./js/Sun";
 import Planet from "./js/Planet";
 import Stars from "./js/Stars";
-
+import canvas from './js/Canvas'
 
 //textures
 import textureEarth from './assets/earth.jpg';
@@ -27,7 +27,7 @@ new Sun({
 })
 
 //earth
-new Planet({
+const earth = new Planet({
     size : {
         radius : 0.1,
         growth: 1,
@@ -50,7 +50,7 @@ new Planet({
 
 
 // mars
-new Planet({
+const mars = new Planet({
     size : {
         radius : 0.15,
         growth: 1,
@@ -74,7 +74,33 @@ new Planet({
 
 
 
+const planets = [
+    earth,
+    mars
+];
 
+let playing = true;
+let speed = 1;
+
+document.getElementById('play').addEventListener('click', ()=> {
+    planets.forEach(p => {
+        p.playing = !p.playing;
+    });
+})
+
+document.getElementById('slow').addEventListener('click', ()=> {
+    planets.forEach(p => {
+        speed += 0.1;
+        p.speed = speed * p.initialSpeed;
+    });
+})
+
+document.getElementById('fast').addEventListener('click', ()=> {
+    planets.forEach(p => {
+        speed -= 0.1;
+        p.speed = speed * p.initialSpeed;
+    });
+})
 
 //new Stars(1000);
 

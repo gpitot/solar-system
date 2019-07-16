@@ -19,7 +19,8 @@ class Planet {
         this.rotation = rotation;
         this.texture = texture;
 
-        this._speed= speed;
+        this.speed = speed;
+        this.initialSpeed = speed;
 
         this.currentZIndex = zIndex;
 
@@ -28,7 +29,7 @@ class Planet {
             this.texture.ratio = img.naturalWidth / img.naturalHeight;
             this.texture.img = img;
             this.drawQueueId = canvas.addToDrawQueue(this.draw, this.currentZIndex);
-            this.updatePlanet();
+            this.playing = true;
         });
 
         
@@ -40,6 +41,17 @@ class Planet {
     }
     get speed() {
         return this._speed;
+    }
+
+    set playing(bool) {
+        const setPlayingAgain = bool && !this._playing;
+        this._playing = bool;
+        if (setPlayingAgain) {
+            this.updatePlanet();
+        }
+    }
+    get playing() {
+        return this._playing;
     }
 
     loadTexture = (texture, cb) => {
@@ -111,11 +123,15 @@ class Planet {
 
 
     updatePlanet = () => {
+        
         this.updateSize();
         this.updatePosition();
         this.updateRotation();
 
-        setTimeout(this.updatePlanet, this.speed);
+        if (this.playing) {
+            setTimeout(this.updatePlanet, this.speed);
+        }
+        
     }
 
 
@@ -180,7 +196,6 @@ class Planet {
 
     drawTexture = (ctx, coords) => {
         ctx.save();
-        console.log(this.rotation);
         const {position: {x, y} , size} = coords;
         
         const {img, ratio} = this.texture;
