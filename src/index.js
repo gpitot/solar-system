@@ -27,24 +27,24 @@ new Sun({
 })
 
 //earth
-// new Planet({
-//     size : {
-//         radius : 0.1,
-//         growth: 1,
-//         min : 0.7,
-//         max : 1.5,
-//     },
-//     ellipse : {
-//         xRadius : 0.45,
-//         yRadius : 0.2,
-//         angle : 0,
-//         rotation : 340
-//     },
-//     rotation : 0,
-//     texture : {
-//         src : textureEarth,
-//     }
-// });
+new Planet({
+    size : {
+        radius : 0.1,
+        growth: 1,
+        min : 0.6,
+        max : 1.8,
+    },
+    ellipse : {
+        xRadius : 0.45,
+        yRadius : 0.2,
+        angle : 0,
+        rotation : 340
+    },
+    rotation : 0,
+    texture : {
+        src : textureEarth,
+    }
+});
 
 
 //mars

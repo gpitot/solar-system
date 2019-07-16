@@ -87,15 +87,9 @@ class Planet {
     }
 
     updateRotation = () => {
-        this.rotation -= 1;
+        this.rotation += 0.5;
 
-        const {width} = canvas.canvas;
-        const {radius, growth} = this.size;
-        const size = ratioToReal(radius * growth, width);
-
-        const {img, ratio} = this.texture;
-
-        if (size * 2 * ratio + this.rotation < size * 2) {
+        if (this.rotation >= 70) {
             //reset
             this.rotation = 0;
             console.log('reset rotation');
@@ -182,25 +176,17 @@ class Planet {
         const left = x - size; //left point of circle
         const top = y - size; // top point of circle
 
-        ctx.beginPath();
-        ctx.arc(left, top, 5, 0, 2 * Math.PI);
-        ctx.strokeStyle = "red";
-        ctx.stroke();
-        ctx.closePath();
-
-        ctx.beginPath();
-        ctx.arc(left + this.rotation, top, 5, 0, 2 * Math.PI);
-        ctx.strokeStyle = "white";
-        ctx.stroke();
-        ctx.closePath();
-
+        
         const earthWidth = size * 2 * ratio;
         const earthHeight = size * 2;
 
         
         //ctx.rotate(0, Math.PI / 180);
-        ctx.fillStyle = "red";
-        ctx.drawImage(img, left + this.rotation, top, earthWidth, earthHeight)
+        
+        const percentageRotated = this.rotation * earthWidth / 100;
+
+
+        ctx.drawImage(img, left - percentageRotated , top, earthWidth, earthHeight)
 
         ctx.restore();
     }
