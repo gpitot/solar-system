@@ -10,16 +10,18 @@ class Planet {
         size,
         ellipse,
         rotation,
-        texture
+        texture,
+        speed=20,
+        zIndex
     }) {
         this.size = size;
         this.ellipse = ellipse;
         this.rotation = rotation;
         this.texture = texture;
 
-        this.speed= 20;
+        this._speed= speed;
 
-        this.currentZIndex = 5;
+        this.currentZIndex = zIndex;
 
         this.loadTexture(texture, (img) => {
             //get ratio
@@ -30,6 +32,14 @@ class Planet {
         });
 
         
+    }
+
+
+    set speed(speed) {
+        this._speed = speed;
+    }
+    get speed() {
+        return this._speed;
     }
 
     loadTexture = (texture, cb) => {
@@ -77,19 +87,21 @@ class Planet {
 
         //edit zindex
         //if angle > 0 && angle < 180 then infront
-        if (angle > 0 && angle < 180 && this.currentZIndex !== 5) {
-            this.currentZIndex = 5;
+        if (angle > 0 && angle < 180 && this.currentZIndex < 0) {
+            this.currentZIndex *= -1;
             canvas.editDrawQueue(this.drawQueueId, this.draw, this.currentZIndex);
-        } else if (angle >= 180 && angle <= 360 && this.currentZIndex !== 0) {
-            this.currentZIndex = 0;
+
+        } else if (angle >= 180 && angle <= 360 && this.currentZIndex > 0) {
+            this.currentZIndex *= -1;
             canvas.editDrawQueue(this.drawQueueId, this.draw, this.currentZIndex);
-        }        
+        } 
+       
     }
 
     updateRotation = () => {
         this.rotation += 0.5;
 
-        if (this.rotation >= 70) {
+        if (this.rotation >= this.texture.rotationReset) {
             //reset
             this.rotation = 0;
             console.log('reset rotation');

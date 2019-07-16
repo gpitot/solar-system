@@ -43,29 +43,35 @@ new Planet({
     rotation : 0,
     texture : {
         src : textureEarth,
-    }
+        rotationReset : 68
+    },
+    zIndex : 3,
 });
 
 
-//mars
-// new Planet({
-//     size : {
-//         radius : 0.15,
-//         growth: 1,
-//         min : 0.4,
-//         max : 2,
-//     },
-//     ellipse : {
-//         xRadius : 0.35,
-//         yRadius : 0.4,
-//         angle : 0,
-//         rotation : 25
-//     },
-//     rotation : 0,
-//     texture : {
-//         src : textureMars,
-//     }
-// });
+// mars
+new Planet({
+    size : {
+        radius : 0.15,
+        growth: 1,
+        min : 0.4,
+        max : 2,
+    },
+    ellipse : {
+        xRadius : 0.35,
+        yRadius : 0.4,
+        angle : 0,
+        rotation : 25
+    },
+    rotation : 0,
+    texture : {
+        src : textureMars,
+        rotationReset : 50
+    }, 
+    speed : 30,
+    zIndex : 4
+});
+
 
 
 
