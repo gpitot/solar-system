@@ -22,6 +22,8 @@ class Planet {
         this.currentZIndex = 5;
 
         this.loadTexture(texture, (img) => {
+            //get ratio
+            this.texture.ratio = img.naturalWidth / img.naturalHeight;
             this.texture.img = img;
             this.drawQueueId = canvas.addToDrawQueue(this.draw, this.currentZIndex);
             this.updatePlanet();
@@ -150,7 +152,7 @@ class Planet {
         
 
         ctx.clip();
-        
+        //
         const coords = {
             position : {x, y},
             size
@@ -172,13 +174,25 @@ class Planet {
 
     drawTexture = (ctx, coords) => {
         ctx.save();
-
+        console.log(this.rotation);
         const {position: {x, y} , size} = coords;
         
         const {img, ratio} = this.texture;
 
-        const left = x - size ; //left point of circle
+        const left = x - size; //left point of circle
         const top = y - size; // top point of circle
+
+        ctx.beginPath();
+        ctx.arc(left, top, 5, 0, 2 * Math.PI);
+        ctx.strokeStyle = "red";
+        ctx.stroke();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(left + this.rotation, top, 5, 0, 2 * Math.PI);
+        ctx.strokeStyle = "white";
+        ctx.stroke();
+        ctx.closePath();
 
         const earthWidth = size * 2 * ratio;
         const earthHeight = size * 2;

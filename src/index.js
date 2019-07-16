@@ -10,7 +10,7 @@ import Stars from "./js/Stars";
 
 
 //textures
-import textureEarth from './assets/earth2.jpg';
+import textureEarth from './assets/earth.jpg';
 import textureMars from './assets/mars.jpg';
 
 // const earth = new Earth({
@@ -27,47 +27,45 @@ new Sun({
 })
 
 //earth
-new Planet({
-    size : {
-        radius : 0.1,
-        growth: 1,
-        min : 0.7,
-        max : 1.8,
-    },
-    ellipse : {
-        xRadius : 0.45,
-        yRadius : 0.2,
-        angle : 0,
-        rotation : 340
-    },
-    rotation : 0,
-    texture : {
-        src : textureEarth,
-        ratio : 3.125
-    }
-});
+// new Planet({
+//     size : {
+//         radius : 0.1,
+//         growth: 1,
+//         min : 0.7,
+//         max : 1.5,
+//     },
+//     ellipse : {
+//         xRadius : 0.45,
+//         yRadius : 0.2,
+//         angle : 0,
+//         rotation : 340
+//     },
+//     rotation : 0,
+//     texture : {
+//         src : textureEarth,
+//     }
+// });
 
 
 //mars
-new Planet({
-    size : {
-        radius : 0.15,
-        growth: 1,
-        min : 0.4,
-        max : 2,
-    },
-    ellipse : {
-        xRadius : 0.35,
-        yRadius : 0.4,
-        angle : 0,
-        rotation : 25
-    },
-    rotation : 0,
-    texture : {
-        src : textureMars,
-        ratio : 3.125
-    }
-});
+// new Planet({
+//     size : {
+//         radius : 0.15,
+//         growth: 1,
+//         min : 0.4,
+//         max : 2,
+//     },
+//     ellipse : {
+//         xRadius : 0.35,
+//         yRadius : 0.4,
+//         angle : 0,
+//         rotation : 25
+//     },
+//     rotation : 0,
+//     texture : {
+//         src : textureMars,
+//     }
+// });
 
 
 
