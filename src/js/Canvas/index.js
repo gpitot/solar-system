@@ -76,14 +76,12 @@ class Canvas {
         }
         
         if (added === false) {
-            console.log(added);
             this.queue.unshift({
                 queueID : drawQueueID,
                 drawFN,
                 zIndex
             })
         }
-        console.log(this.queue);
         return drawQueueID;
     }
 
@@ -108,8 +106,10 @@ class Canvas {
 const canvas = new Canvas({
     element : document.getElementById('solar'),
     dimensions : {
+        // width : window.innerWidth,
+        // height : window.innerHeight
         width : 800,
-        height : 800
+        height : 600
     }
 })
 
