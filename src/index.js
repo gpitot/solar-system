@@ -13,30 +13,25 @@ import canvas from './js/Canvas'
 import textureEarth from './assets/earth.jpg';
 import textureMars from './assets/mars.jpg';
 
-// const earth = new Earth({
-//     ellipse : {
-//         xRadius : 0.45,
-//         yRadius : 0.2
-//     },
-//     angle : 0,
-// })
 
 
-new Sun({
+
+
+const sun = new Sun({
 
 })
 
 //earth
 const earth = new Planet({
     size : {
-        radius : 0.1,
+        radius : 1,
         growth: 1,
         min : 0.6,
         max : 1.8,
     },
     ellipse : {
-        xRadius : 0.45,
-        yRadius : 0.2,
+        xRadius : 0.15,
+        yRadius : 0.06,
         angle : 0,
         rotation : 340
     },
@@ -50,26 +45,27 @@ const earth = new Planet({
 
 
 // mars
+//mars
 const mars = new Planet({
     size : {
-        radius : 0.15,
+        radius : 0.532,
         growth: 1,
-        min : 0.4,
-        max : 2,
+        min : 0.6,
+        max : 1.8,
     },
     ellipse : {
-        xRadius : 0.35,
-        yRadius : 0.4,
+        xRadius : 0.1,
+        yRadius : 0.04,
         angle : 0,
-        rotation : 25
+        rotation : 340
     },
     rotation : 0,
     texture : {
         src : textureMars,
-        rotationReset : 50
+        rotationReset : 30
     }, 
     speed : 30,
-    zIndex : 4
+    zIndex : 2
 });
 
 
@@ -82,25 +78,61 @@ const planets = [
 let playing = true;
 let speed = 1;
 
-document.getElementById('play').addEventListener('click', ()=> {
-    planets.forEach(p => {
-        p.playing = !p.playing;
-    });
-})
-
-document.getElementById('slow').addEventListener('click', ()=> {
-    planets.forEach(p => {
-        speed += 0.1;
-        p.speed = speed * p.initialSpeed;
-    });
-})
-
-document.getElementById('fast').addEventListener('click', ()=> {
-    planets.forEach(p => {
-        speed -= 0.1;
-        p.speed = speed * p.initialSpeed;
-    });
-})
 
 //new Stars(1000);
+let config = {
+    speed : 1,
+    scale : 0.03,
+    radius : 1,
+}
 
+
+
+
+function updatePlanets() {
+    const {scale, speed, radius} = config;
+    planets.forEach(planet => {
+        planet.size.radius = planet.size.initialRadius * scale;
+        planet.ellipse.xRadius = planet.ellipse.initialXRadius * radius;
+        planet.ellipse.yRadius = planet.ellipse.initialYRadius * radius;
+
+        planet.speed = planet.initialSpeed * speed;
+    });
+
+    sun.radius = scale * sun.initialRadius;
+}
+
+updatePlanets();
+
+// function handleScroll(e) {
+//     if (e.deltaY > 0) {
+//         //scroll down = smaller
+//         if (config.scale > 0) {
+//             config.scale -= 0.01;
+//             config.radius += 0.01;
+//         }
+        
+//     } else {
+//         config.scale += 0.01;
+//         config.radius -= 0.01;
+//     }
+//     console.log('OCCURS');
+//     updatePlanets();
+    
+// }
+// console.log(earth);
+// window.addEventListener('wheel', handleScroll);
+function handlePause() {
+    planets.forEach(planet => planet.playing = !planet.playing);
+}
+
+document.getElementById('play').addEventListener('click', handlePause);
+document.getElementById('fast').addEventListener('click', ()=> {
+    config.speed -= 0.1;
+    updatePlanets();
+});
+
+document.getElementById('slow').addEventListener('click', ()=> {
+    config.speed += 0.1;
+    updatePlanets();
+});

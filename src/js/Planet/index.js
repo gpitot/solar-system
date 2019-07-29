@@ -15,7 +15,13 @@ class Planet {
         zIndex
     }) {
         this.size = size;
+        this.size.initialRadius = this.size.radius;
+        this.playing = false;
+        
         this.ellipse = ellipse;
+        this.ellipse.initialXRadius = ellipse.xRadius;
+        this.ellipse.initialYRadius = ellipse.yRadius;
+
         this.rotation = rotation;
         this.texture = texture;
 
@@ -116,15 +122,14 @@ class Planet {
         if (this.rotation >= this.texture.rotationReset) {
             //reset
             this.rotation = 0;
-            console.log('reset rotation');
         }
         
     }
 
 
     updatePlanet = () => {
+        //this.updateSize();
         
-        this.updateSize();
         this.updatePosition();
         this.updateRotation();
 

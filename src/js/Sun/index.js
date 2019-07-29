@@ -13,7 +13,7 @@ const POSITION = {
     y : 0.5
 }
 
-const RADIUS = 0.3;
+const RADIUS = 3;
 
 
 
@@ -24,6 +24,7 @@ class Sun {
 
         this.position = POSITION;
         this.radius = RADIUS;
+        this.initialRadius = RADIUS;
 
         this.speed = 25;
 
@@ -42,8 +43,8 @@ class Sun {
             }
         }
         const numPixelsInRow = ratioToReal(RADIUS, canvas.canvas.width) / PIXELSIZE ;
-        this.map = generateMap(numPixelsInRow, rndColor, 1);
-
+        //this.map = generateMap(numPixelsInRow, rndColor, 1);
+        this.map = {};
         this.map.gradient = [
             [[25, 1], [75, 1], [50], [1]],
             [[50, 1], [75, 1], [50], [1]]
