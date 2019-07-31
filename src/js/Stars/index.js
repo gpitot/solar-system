@@ -5,8 +5,8 @@ class Stars {
     constructor(numStars) {
         this.stars = [];
         this.config = {
-            maxSize : 10,
-        
+            maxSize : 5,
+            flickerTime : 15500
         }
 
         this.starFlickerSpeed = 120;
@@ -15,7 +15,7 @@ class Stars {
         this.createStars(numStars);
         
         canvas.addToDrawQueue(this.draw, 0);
-        this.updateStars();
+        //this.updateStars();
     }
 
 
@@ -38,8 +38,8 @@ class Stars {
 
     createStar = () => {
         const {width ,height} = canvas.canvas;
-        const {maxSize} = this.config;
-
+        const {maxSize, flickerTime} = this.config;
+        const currentEpoch = Date.now();
         return {
             position : {
                 x : Math.floor(Math.random() * width),
@@ -47,12 +47,15 @@ class Stars {
             },
             radius : Math.floor(Math.random() * maxSize),
             color : 'white',
-            rotation : Math.floor(Math.random() * 360)
+            rotation : Math.floor(Math.random() * 360),
+            flicker : Math.floor(Math.random() * flickerTime) + 3000,
+            flickerReset : currentEpoch,
         }
     }
 
 
     draw = ctx => {
+        const currentEpoch = Date.now();
         for (let i=0; i<this.stars.length; i+=1) {
             const {
                 position : {
@@ -60,7 +63,9 @@ class Stars {
                 },
                 radius,
                 color,
-                rotation
+                rotation,
+                flicker,
+                flickerReset
             } = this.stars[i];
             
             // ctx.beginPath();
@@ -68,12 +73,20 @@ class Stars {
             // ctx.fillStyle = color;
             // ctx.fill();
             // ctx.closePath();
-            ctx.save();
-            ctx.fillStyle = color;
-            ctx.translate(x + radius / 2, y + radius / 2);
-            ctx.rotate(rotation, Math.PI / 180);
-            ctx.fillRect(-radius/2, -radius/2, radius, radius);
-            ctx.restore();
+            
+            //check flicker
+            //console.log(currentEpoch, flicker)
+            if (currentEpoch > flickerReset + flicker) {
+                ctx.save();
+                ctx.fillStyle = color;
+                ctx.translate(x + radius / 2, y + radius / 2);
+                ctx.rotate(rotation, Math.PI / 180);
+                ctx.fillRect(-radius/2, -radius/2, radius, radius);
+                ctx.restore();
+
+                this.stars[i].flickerReset = currentEpoch;
+            }
+            
 
             
 

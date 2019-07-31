@@ -187,8 +187,8 @@ class Planet {
 
         this.drawTexture(ctx, coords);
 
-        ctx.strokeStyle="white";
-        ctx.stroke();
+        // ctx.strokeStyle="white";
+        // ctx.stroke();
         ctx.closePath();
 
         ctx.restore();
